@@ -38,12 +38,16 @@ var repo_default = {
 		const path = url.pathname.split(/\//);
 		const legacy = path[1] == "legacy"
 
+		// Syntax checks
 		if (legacy) {
 			if (!path[2].trim()) 
 				return new Response(JSON.stringify({ message: "Missing ROBLOX subdomain." }), { status: 400 });
 			
 			if (!domains.includes(path[2])) 
 				return new Response(JSON.stringify({ message: "Specified subdomain is not allowed." }), { status: 401 });
+		} else {
+			if (!path[1].trim())
+				return new Response(JSON.stringify({ message: "Missing path." }), { status: 400 })
 		}
 
 		const headers = new Headers(request.headers);
